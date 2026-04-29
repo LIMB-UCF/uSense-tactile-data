@@ -65,7 +65,7 @@ if __name__ == "__main__":
                     file = f'processed_S{speed}_F{force}_T{trial}.npz'
                     path = os.path.join(BASE_PATH, folder, file)
                     if not os.path.isfile(path) or os.path.getsize(path) == 0:
-                        print(f"File not found or empty: {path}")
+                        #print(f"File not found or empty: {path}")
                         continue
                     print(f"Loading file: {path}") 
                     signal = load_signal(path, speed) # (338, 9) for 1 second of data 
