@@ -42,7 +42,7 @@ BASE_PATH = "/content/tactile"
 if __name__ == "__main__":
     textures_data = []
     labels = []  
-    save_dir = "/content/unary/segmented_data" 
+    save_dir = "/content/output/segmented_data"
     # os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, f"segmented_data.npz")
     if os.path.exists(save_path):
