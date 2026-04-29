@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 # ==== Config ====
-TYPES = [0  , 1, 2, 3]
+TYPES = [0, 1, 2, 3]
 DENSITIES = [1, 2, 3, 4, 5]
 
 SPEEDS = [1200, 2400, 3600, 4800, 6000] 
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     textures_data = []
     labels = []  
     save_dir = "/content/output/segmented_data"
-    # os.makedirs(save_dir, exist_ok=True)
+    os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, f"segmented_data.npz")
     if os.path.exists(save_path):
         open(save_path, "w").close()
