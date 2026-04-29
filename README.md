@@ -10,7 +10,14 @@ This repository provides:
 
 The complete dataset is available upon request.
 
+## ⚙️ Preprocessing (Run before the uSense pipeline)
 
+Run the following scripts **in order** before running the end-to-end uSense pipeline:
+
+```bash
+!python src/csv_2_npz.py      # Step 1: Convert CSV → NPZ
+!python src/segmentation.py   # Step 2: Segment data → segmented_data.npz
+```
 
 ## Code Availability
 
