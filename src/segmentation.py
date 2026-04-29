@@ -57,7 +57,8 @@ if __name__ == "__main__":
         print(f"{texture} processing...")
         for speed in SPEEDS:
             for force in FORCES:
-                folder = f'Texture0{texture}'
+                folder = f'Texture0{texture.zfill(3)}'
+                #folder = f'Texture0{texture}'
                 print(f' exapcted folder is {folder}')
                 label = f'T{texture}_S{speed}_F{force}'
                 for trial in range(1, 101):
