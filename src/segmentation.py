@@ -32,8 +32,7 @@ def load_signal(file_path, speed):
         signal = signal[start_idx:end_idx, :] #  (338, 9)
         signal = np.array(signal, dtype=np.float32) 
         return signal
-    except Exception as e:
-        print(f"Error loading {file_path}: {e}")
+    except Exception:
         return None
 
 
@@ -64,7 +63,7 @@ if __name__ == "__main__":
                     file = f'processed_S{speed}_F{force}_T{trial}.npz'
                     path = os.path.join(BASE_PATH, folder, file)
                     if not os.path.isfile(path) or os.path.getsize(path) == 0:
-                        print(f"File not found or empty: {path}")
+                        #print(f"File not found or empty: {path}")
                         continue
                     # print(f"Loading file: {path}") 
                     signal = load_signal(path, speed) # (338, 9) for 1 second of data 
@@ -77,17 +76,17 @@ if __name__ == "__main__":
                             labels.append(label)
                     # each signal shape here (10, 32, 9)
                     #print(f' Loaded texture {texture}, speed {speed}, force {force}, trial {trial}, concat shape: {np.array(check).shape}, labels shape {np.array(labels).shape}')
-                print(f' data shape for comb is : {np.array(check).shape}')
-        print(f' Number of trials for texture {texture}: {trials}')
-        print(f' shape of check: texture{texture} {np.array(check).shape}')
+                #print(f' data shape for comb is : {np.array(check).shape}')
+        #print(f' Number of trials for texture {texture}: {trials}')
+        #print(f' shape of check: texture{texture} {np.array(check).shape}')
     if textures_data: 
         textures_data = np.array(textures_data)
-        print(f' texture data shape: {textures_data.shape}')
+        #print(f' texture data shape: {textures_data.shape}')
         textures_data = textures_data.transpose(0, 2, 1)  # 
-        print(f"Shape of textures_data before reshaping: {textures_data.shape}")
+        #print(f"Shape of textures_data before reshaping: {textures_data.shape}")
         textures_data = textures_data.reshape(-1, 32)      
         labels = np.repeat(labels, 9)  # Repeat labels for each segment
-        print(f' shape of labels: {np.array(labels).shape}')
+        #print(f' shape of labels: {np.array(labels).shape}')
         labels = np.array(labels)
         print(f'Final shape of textures_data: {textures_data.shape}, labels: {labels.shape}')
         print(f'unique labels: {set(labels)}')
