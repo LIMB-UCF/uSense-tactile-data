@@ -16,50 +16,36 @@ SPEED_TIME_RANGES = {1200: (18.5, 19.5),
                 }
 
 texture_ids = [f"{t}{d}" for t in TYPES for d in DENSITIES]
-# add texture 0 with density 0
 texture_ids.append("00")
 print(f' total texture ids: {len(texture_ids)} -> {texture_ids}')
 
-# # ==== Functions ====
 
 def load_signal(file_path, speed):
     try:
         with np.load(file_path, allow_pickle=True) as data:
             print(f"\n--- Loading: {file_path}")
             print(f"Keys in file: {list(data.keys())}")
-
             raw = data['data']
             print(f"Raw shape: {raw.shape}, dtype: {raw.dtype}")
-
             signal = raw[:, :9]
-            print(f"After channel select (first 9): {signal.shape}")
-
+          
         start_sec = SPEED_TIME_RANGES[speed][0]
         start_idx = int(start_sec * SAMPLING_RATE)
         end_idx = int((start_sec + 1) * SAMPLING_RATE)
-
-        print(f"Cropping indices: {start_idx}:{end_idx}")
-
+        
         if end_idx > signal.shape[0]:
-            print(f"⚠️ Skipping: signal too short ({signal.shape[0]})")
+            print(f"Skipping: signal too short ({signal.shape[0]})")
             return None
 
         signal = signal[start_idx:end_idx, :]
-        print(f"After cropping: {signal.shape}")
-
         signal = np.array(signal, dtype=np.float32)
-
-        # quick sanity stats
-        print(f"Min: {signal.min():.4f}, Max: {signal.max():.4f}, Mean: {signal.mean():.4f}")
-
+        #print(f"Min: {signal.min():.4f}, Max: {signal.max():.4f}, Mean: {signal.mean():.4f}")
         return signal
 
     except Exception as e:
-        print(f"❌ Loading failed for {file_path}: {e}")
+        print(f"Loading failed for {file_path}: {e}")
         return None
 
-
-# ==== Main Execution ====
 
 BASE_PATH = "/content/tactile" 
 if __name__ == "__main__":
@@ -81,8 +67,6 @@ if __name__ == "__main__":
         for speed in SPEEDS:
             for force in FORCES:
                 folder = f'Texture0{texture.zfill(3)}'
-                #folder = f'Texture0{texture}'
-                print(f' exapcted folder is {folder}')
                 label = f'T{texture}_S{speed}_F{force}'
                 for trial in range(1, 101):
                     file = f'processed_S{speed}_F{force}_T{trial}.npz'
@@ -106,15 +90,15 @@ if __name__ == "__main__":
         print(f' shape of check: texture{texture} {np.array(check).shape}')
     if textures_data: 
         textures_data = np.array(textures_data)
-        print(f' texture data shape: {textures_data.shape}')
+        #print(f' texture data shape: {textures_data.shape}')
         textures_data = textures_data.transpose(0, 2, 1)  # 
-        print(f"Shape of textures_data before reshaping: {textures_data.shape}")
+        #print(f"Shape of textures_data before reshaping: {textures_data.shape}")
         textures_data = textures_data.reshape(-1, 32)      
         labels = np.repeat(labels, 9)  # Repeat labels for each segment
-        print(f' shape of labels: {np.array(labels).shape}')
+        #print(f' shape of labels: {np.array(labels).shape}')
         labels = np.array(labels)
-        print(f'Final shape of textures_data: {textures_data.shape}, labels: {labels.shape}')
-        print(f'unique labels: {set(labels)}')
+        #print(f'Final shape of textures_data: {textures_data.shape}, labels: {labels.shape}')
+        #print(f'unique labels: {set(labels)}')
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         np.savez_compressed(save_path, data=textures_data, labels=labels)  # <-- Save both
         print(f"Saved {save_path}")
