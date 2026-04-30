@@ -25,15 +25,37 @@ print(f' total texture ids: {len(texture_ids)} -> {texture_ids}')
 def load_signal(file_path, speed):
     try:
         with np.load(file_path, allow_pickle=True) as data:
-            signal = data['data'][:, :9]
+            print(f"\n--- Loading: {file_path}")
+            print(f"Keys in file: {list(data.keys())}")
+
+            raw = data['data']
+            print(f"Raw shape: {raw.shape}, dtype: {raw.dtype}")
+
+            signal = raw[:, :9]
+            print(f"After channel select (first 9): {signal.shape}")
+
         start_sec = SPEED_TIME_RANGES[speed][0]
-        end_idx = int((start_sec + 1) * SAMPLING_RATE)
         start_idx = int(start_sec * SAMPLING_RATE)
-        signal = signal[start_idx:end_idx, :] #  (338, 9)
-        signal = np.array(signal, dtype=np.float32) 
+        end_idx = int((start_sec + 1) * SAMPLING_RATE)
+
+        print(f"Cropping indices: {start_idx}:{end_idx}")
+
+        if end_idx > signal.shape[0]:
+            print(f"⚠️ Skipping: signal too short ({signal.shape[0]})")
+            return None
+
+        signal = signal[start_idx:end_idx, :]
+        print(f"After cropping: {signal.shape}")
+
+        signal = np.array(signal, dtype=np.float32)
+
+        # quick sanity stats
+        print(f"Min: {signal.min():.4f}, Max: {signal.max():.4f}, Mean: {signal.mean():.4f}")
+
         return signal
+
     except Exception as e:
-        print('Loading failed')
+        print(f"❌ Loading failed for {file_path}: {e}")
         return None
 
 
