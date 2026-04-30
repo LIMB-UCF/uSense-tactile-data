@@ -5,16 +5,14 @@ import re
 
 DATA_PATH = "/content/uSense-tactile-data/Data sample"
 data_root = "/content/tactile"
-DEBUG = True
+DEBUG = False
 
-# Walk through texture subfolders
 for folder_name in os.listdir(DATA_PATH):
     folder_path = os.path.join(DATA_PATH, folder_name)
-    
-    if not os.path.isdir(folder_path):  # skip if not a folder
+    if not os.path.isdir(folder_path):  
         continue
 
-    for file_name in os.listdir(folder_path):  # now list CSVs inside
+    for file_name in os.listdir(folder_path):  
         if not file_name.endswith(".csv"):
             continue
 
@@ -40,7 +38,7 @@ for folder_name in os.listdir(DATA_PATH):
             print(f"Min: {np.min(data):.4f}, Max: {np.max(data):.4f}, Mean: {np.mean(data):.4f}")
             print(f"First 2 rows:\n{data[:2]}")
             if np.isnan(data).any():
-                print("⚠️ Contains NaNs")
+                print("Contains NaNs")
 
         out_dir = os.path.join(data_root, f"Texture0{texture}")
         os.makedirs(out_dir, exist_ok=True)
