@@ -32,7 +32,8 @@ def load_signal(file_path, speed):
         signal = signal[start_idx:end_idx, :] #  (338, 9)
         signal = np.array(signal, dtype=np.float32) 
         return signal
-    except Exception:
+    except Exception
+        print('Loading failed')
         return None
 
 
