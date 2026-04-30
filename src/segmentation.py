@@ -26,7 +26,7 @@ def load_signal(file_path, speed):
             print(f"\n--- Loading: {file_path}")
             print(f"Keys in file: {list(data.keys())}")
             raw = data['data']
-            print(f"Raw shape: {raw.shape}, dtype: {raw.dtype}")
+            #print(f"Raw shape: {raw.shape}, dtype: {raw.dtype}")
             signal = raw[:, :9]
           
         start_sec = SPEED_TIME_RANGES[speed][0]
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     for texture in texture_ids:
         trials = 0
         check = []
-        print(f"{texture} processing...")
+        #print(f"{texture} processing...")
         for speed in SPEEDS:
             for force in FORCES:
                 folder = f'Texture0{texture.zfill(3)}'
@@ -74,7 +74,7 @@ if __name__ == "__main__":
                     if not os.path.isfile(path) or os.path.getsize(path) == 0:
                         #print(f"File not found or empty: {path}")
                         continue
-                    print(f"Loading file: {path}") 
+                    #print(f"Loading file: {path}") 
                     signal = load_signal(path, speed) # (338, 9) for 1 second of data 
                     trials += 1
                     if signal is not None: # segment into 10 segments of 32 samples each
@@ -84,10 +84,10 @@ if __name__ == "__main__":
                             check.append(segment)
                             labels.append(label)
                     # each signal shape here (10, 32, 9)
-                    print(f' Loaded texture {texture}, speed {speed}, force {force}, trial {trial}, concat shape: {np.array(check).shape}, labels shape {np.array(labels).shape}')
-                print(f' data shape for comb is : {np.array(check).shape}')
-        print(f' Number of trials for texture {texture}: {trials}')
-        print(f' shape of check: texture{texture} {np.array(check).shape}')
+                    #print(f' Loaded texture {texture}, speed {speed}, force {force}, trial {trial}, concat shape: {np.array(check).shape}, labels shape {np.array(labels).shape}')
+                #print(f' data shape for comb is : {np.array(check).shape}')
+        #print(f' Number of trials for texture {texture}: {trials}')
+        #print(f' shape of check: texture{texture} {np.array(check).shape}')
     if textures_data: 
         textures_data = np.array(textures_data)
         #print(f' texture data shape: {textures_data.shape}')

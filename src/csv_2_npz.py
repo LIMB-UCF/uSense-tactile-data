@@ -30,7 +30,7 @@ for folder_name in os.listdir(DATA_PATH):
         trial   = int(match.group(4))
 
         data = pd.read_csv(full_path, header=None).values
-        print(f"Loaded data shape: {data.shape} from {full_path}")
+        #print(f"Loaded data shape: {data.shape} from {full_path}")
 
         if DEBUG:
             print(f"\n--- File: {file_name}")
@@ -45,6 +45,6 @@ for folder_name in os.listdir(DATA_PATH):
         os.makedirs(out_dir, exist_ok=True)
         save_path = os.path.join(out_dir, f"processed_S{speed}_F{force}_T{trial}.npz")
         np.savez_compressed(save_path, data=data)
-        print(f"Saved: {save_path}")
+        #print(f"Saved: {save_path}")
 
 print("Done!")
