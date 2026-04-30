@@ -23,8 +23,8 @@ print(f' total texture ids: {len(texture_ids)} -> {texture_ids}')
 def load_signal(file_path, speed):
     try:
         with np.load(file_path, allow_pickle=True) as data:
-            print(f"\n--- Loading: {file_path}")
-            print(f"Keys in file: {list(data.keys())}")
+            #print(f"\n--- Loading: {file_path}")
+            #print(f"Keys in file: {list(data.keys())}")
             raw = data['data']
             #print(f"Raw shape: {raw.shape}, dtype: {raw.dtype}")
             signal = raw[:, :9]
