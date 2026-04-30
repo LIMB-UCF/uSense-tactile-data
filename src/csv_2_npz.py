@@ -6,7 +6,7 @@ import re
 #DATA_PATH = "/content/uSense-tactile-data/Data sample"
 DATA_PATH = "/content/uSense-tactile-data/sample_trials" 
 data_root = "/content/tactile"
-DEBUG = True
+DEBUG = False
 
 for folder_name in os.listdir(DATA_PATH):
     folder_path = os.path.join(DATA_PATH, folder_name)
