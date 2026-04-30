@@ -52,7 +52,7 @@ def load_signal(file_path, speed):
             raw = data['data']  # shape: (N, 11)
 
         # --- Outlier removal (load cell = col 9, 0-indexed) ---
-        load_cell = raw[:, LOAD_CELL_COL]
+        load_cell = raw[:, 9]
         if np.any(np.abs(load_cell) > OUTLIER_THRESHOLD):
             print(f"  Outlier detected, discarding: {file_path}")
             return None
