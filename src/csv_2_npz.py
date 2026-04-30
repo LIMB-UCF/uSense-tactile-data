@@ -3,8 +3,7 @@ import numpy as np
 import pandas as pd
 import re
 
-#DATA_PATH = "/content/uSense-tactile-data/Data sample"
-DATA_PATH = "/content/uSense-tactile-data/sample_trials" 
+DATA_PATH = "/content/uSense-tactile-data/Data sample"
 data_root = "/content/tactile"
 DEBUG = False
 
