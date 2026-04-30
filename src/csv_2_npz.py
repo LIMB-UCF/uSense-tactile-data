@@ -24,7 +24,7 @@ for file_name in os.listdir(DATA_PATH):
     trial = int(match.group(4))
     
     data = pd.read_csv(full_path, header=None).values
-
+    print(f"Loaded data shape: {data.shape} from {full_path}")
     # ===== DEBUG PRINTS =====
     if DEBUG:
         print(f"\n--- File: {file_name}")
