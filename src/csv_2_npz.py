@@ -10,6 +10,7 @@ DEBUG = True  # turn off later
 
 for file_name in os.listdir(DATA_PATH):
     if not file_name.endswith(".csv"):
+        print(f'no .csv file found')
         continue
     
     full_path = os.path.join(DATA_PATH, file_name)
