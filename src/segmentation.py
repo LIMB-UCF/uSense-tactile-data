@@ -20,7 +20,7 @@ texture_ids.append("00")
 print(f' total texture ids: {len(texture_ids)} -> {texture_ids}')
 
 
-def load_signal(file_path, speed):
+def load_signal1(file_path, speed):
     try:
         with np.load(file_path, allow_pickle=True) as data:
             #print(f"\n--- Loading: {file_path}")
@@ -46,6 +46,36 @@ def load_signal(file_path, speed):
         print(f"Loading failed for {file_path}: {e}")
         return None
 
+def load_signal(file_path, speed):
+    try:
+        with np.load(file_path, allow_pickle=True) as data:
+            raw = data['data']  # shape: (N, 11)
+
+        # --- Outlier removal (load cell = col 9, 0-indexed) ---
+        load_cell = raw[:, LOAD_CELL_COL]
+        if np.any(np.abs(load_cell) > OUTLIER_THRESHOLD):
+            print(f"  Outlier detected, discarding: {file_path}")
+            return None
+
+        # --- Baseline correction: subtract per-channel mean of first 10s (taxels only, cols 0-8) ---
+        baseline_end = int(BASELINE_SECONDS * SAMPLING_RATE)  # 10 * 338 = 3380 samples
+        baseline_mean = raw[:baseline_end, :9].mean(axis=0)   
+        raw[:, :9] -= baseline_mean                          
+
+        signal = raw[:, :9]
+        start_sec = SPEED_TIME_RANGES[speed][0]
+        start_idx = int(start_sec * SAMPLING_RATE)
+        end_idx = int((start_sec + 1) * SAMPLING_RATE)
+
+        if end_idx > signal.shape[0]:
+            print(f"  Skipping: signal too short ({signal.shape[0]} samples)")
+            return None
+
+        return signal[start_idx:end_idx, :].astype(np.float32)
+
+    except Exception as e:
+        print(f"  Load failed for {file_path}: {e}")
+        return None
 
 BASE_PATH = "/content/tactile" 
 if __name__ == "__main__":
