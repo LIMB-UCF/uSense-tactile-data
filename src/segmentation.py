@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import random
 
 # ==== Config ====
 TYPES = [0, 1, 2, 3]
